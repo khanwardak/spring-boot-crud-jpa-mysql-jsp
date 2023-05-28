@@ -1,10 +1,15 @@
 package com.practiceAPI4.practice4RestAPI.entity;
 
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class Users {
     private  int id;
+    @Size(min = 2, message = "the name should be at least 2 characters")
     private String name;
+    @Past(message = "the birth date should be in the past")
     private LocalDate dateOfbirth;
 
     public Users(int id, String name, LocalDate dateOfbirth) {

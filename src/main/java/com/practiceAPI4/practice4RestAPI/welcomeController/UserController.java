@@ -3,6 +3,7 @@ package com.practiceAPI4.practice4RestAPI.welcomeController;
 import com.practiceAPI4.practice4RestAPI.entity.Users;
 import com.practiceAPI4.practice4RestAPI.exception.UserNotFoundException;
 import com.practiceAPI4.practice4RestAPI.services.UserDoaService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,7 +18,7 @@ public class UserController {
     public UserController(UserDoaService userDoaService) {
         this.userDoaService = userDoaService;
     }
-@GetMapping("/users")
+    @GetMapping("/users")
     public List<Users> retrieveAllUsers(){
         return userDoaService.findAll();
     }
@@ -25,8 +26,13 @@ public class UserController {
     public List<Users> findAllById(@PathVariable int id) throws UserNotFoundException {
         return userDoaService.findById(id);
     }
+
+    @DeleteMapping("/users/{id}")
+    public void deleteById(@PathVariable int id) throws UserNotFoundException {
+        userDoaService.deleteById(id);
+    }
     @PostMapping("/users")
-    public ResponseEntity<Object> createUser(@RequestBody Users user){
+    public ResponseEntity<Object> createUser(@Valid @RequestBody Users user){
 
        Users savedUser= userDoaService.save(user);
 //       when the new user cdreate retune the new url users/new id

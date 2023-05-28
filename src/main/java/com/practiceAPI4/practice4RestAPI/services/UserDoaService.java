@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 @Component
 public class UserDoaService {
@@ -36,6 +37,14 @@ public class UserDoaService {
               throw  new UserNotFoundException("this user with id "+id+"not found");
           }
       return usersList;
+  }
+    //  delete a specific user by id
+  public  void   deleteById(int id){
+    //      instead of conitional statements Predicate is used
+      Predicate<? super Users > predicate = user -> user.getId()== id;
+      users.removeIf(predicate);
+     // return  users.stream().filter(predicate).findFirst().orElseThrow(null);
+
   }
   // save the users
     public Users save(Users user){
