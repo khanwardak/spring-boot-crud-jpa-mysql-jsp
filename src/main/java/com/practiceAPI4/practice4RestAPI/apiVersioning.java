@@ -31,4 +31,44 @@ public class apiVersioning {
     public PersonV2 urlVesioningScondVersion(){
         return new PersonV2("Khan","Wardak");
     }
+
+    /* here we do request param url versioning based on
+       person information
+     */
+    @GetMapping(path = "/person", params = "version1")
+    public PersonV1 requestParamVesioningFirstVersion(){
+        return new PersonV1("Khan Wardak");
+    }
+
+    // here we need to change the api to version2
+
+    @GetMapping(path = "person", params = "version2")
+    public PersonV2 requestVesioningScondVersion(){
+        return new PersonV2("Khan","Wardak");
+    }
+
+    // here we do Header url versioning
+
+    @GetMapping(path = "/person", headers = "api-version=1")
+    public PersonV1 headerVesioningFirstVersion(){
+        return new PersonV1("Khan Wardak");
+    }
+
+    // version 2 of the header versioning
+    @GetMapping(path = "person", headers = "api-version=2")
+    public PersonV2 headerVesioningScondVersion(){
+        return new PersonV2("Khan","Wardak");
+    }
+    // here is the version1 of media type versioning
+    @GetMapping(path = "/person", produces = "application/v.app-v1+json")
+    public PersonV1 mediaTypeVesioningFirstVersion(){
+        return new PersonV1("Khan Wardak");
+    }
+
+    // here is the version2 of media type versioning
+    @GetMapping(path = "person",produces ="application/v.app-v2+json")
+    public PersonV2 mediaTypeVesioningScondVersion(){
+        return new PersonV2("Khan","Wardak");
+    }
+
 }
