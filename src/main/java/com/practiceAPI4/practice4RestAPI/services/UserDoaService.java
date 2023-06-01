@@ -23,7 +23,7 @@ public class UserDoaService {
   public List<Users> findAll(){
       return users;
   }
-  public  List<Users> findById(int id) throws UserNotFoundException{
+ /* public  List<Users> findById(int id) throws UserNotFoundException{
 
           List<Users> usersList = new ArrayList<>();
           for (int i = 0; i < users.size(); i++) {
@@ -38,6 +38,15 @@ public class UserDoaService {
           }
       return usersList;
   }
+
+  */
+
+//    in here we use predicate instead for loop to get a specific user base on id
+  public Users findeById(int id){
+     Predicate<? super Users> predicate = user-> user.getId() == id;
+     return  users.stream().filter(predicate).findFirst().get();
+  }
+
     //  delete a specific user by id
   public  void   deleteById(int id){
     //      instead of conitional statements Predicate is used
