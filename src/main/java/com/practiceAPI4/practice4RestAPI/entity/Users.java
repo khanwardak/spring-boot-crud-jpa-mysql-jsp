@@ -2,11 +2,14 @@ package com.practiceAPI4.practice4RestAPI.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
 
+@Entity(name = "users_details")
 public class Users {
     /* We can customize uor rest-api as we want on the name property We
         customize name @JsonProperty("user_name"), in response it return
@@ -15,7 +18,14 @@ public class Users {
      */
 
 //    We done filtering on id field
-    @JsonIgnore
+
+    public Users() {
+
+    }
+
+//    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private  int id;
     @Size(min = 2, message = "the name should be at least 2 characters")
 
@@ -24,6 +34,17 @@ public class Users {
     private String name;
     @Past(message = "the birth date should be in the past")
     private LocalDate dateOfbirth;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Post> posts;
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
     public Users(int id, String name, LocalDate dateOfbirth) {
         this.id = id;
